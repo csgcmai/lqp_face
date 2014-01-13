@@ -3,9 +3,9 @@ Information
 
 Project webpage: .
 
-This is an implementation of our face recognition system [2]  based on
-Local Quantized Pattern features [1]. The current implementation is the 
-replica of learning code used in [2], however the feature computation code is original one [1, 2].
+This is an implementation of our face verification system [2]  based on
+Local Quantized Pattern features [1, 3]. The current implementation is the 
+replica of learning code used in [2], however the feature computation code is the original one [1].
 
 The current distribution contains code for computing local pattern features (LBP, LTP, LQP, etc.) 
 and unsupervised learning, as well as models trained on Labelled Faces in Wild datasets.
@@ -13,36 +13,41 @@ and unsupervised learning, as well as models trained on Labelled Faces in Wild d
 Feature computation code is implemented in C++, while the learning code is written in python.
 We also provide scripts (both in both python and bash) for computing features only.  The software was tested on Ubuntu 12.04.03 with the libraries mentioned as follows. 
 
-ImageMagick: Version 6.8.1 Q16
+ImageMagick (http://www.imagemagick.org/script/install-source.php): Version 6.8.1 Q16
 g++: Version 4.6.3
-Boost: Version 1.46
+Boost (http://www.boost.org/): Version 1.46
+Eigen (http://eigen.tuxfamily.org): Version 2.0 (included in this distribution)
+MPI_KMEANS (http://mloss.org/software/view/48/): Version 1.5 (included in this distribution)
 
 There may be compatibility issues with other versions of libraries.
 
 For questions concerning the code please contact Sibt ul Hussain at
 <sibt Dot ul Dot Hussain AT gmail DOT com>.
 
-This project has been supported by the Grants from Higher Education Commission (HEC) of Pakistan, European Union Project CLASS, and French ANR i.e. ANR-08-SECU-008-01/SCARFACE.
+This project has been supported by grants from Higher Education Commission (HEC) of Pakistan, European Union Project CLASS, and French ANR i.e. ANR-08-SECU-008-01/SCARFACE.
+
+License
+=========
+For license terms please see license.lic. 
 
 How to Cite
 ===========
-When citing our system, please cite reference [1, 2].
-
-
+When citing our system, please cite references [1] and [2].
 
 References:
 ===========
 [1]. S. Hussain and B. Triggs, "Visual Recognition using Local Quantized Patterns",  In 12th European Conference on Computer Vision (ECCV), 2012.  
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.
+[3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", Thesis University of Grenoble, 2011.
 
 
 Software Requirements:
 ======================
-To compile the code successfully you will need to install ImageMagick development files and C++ boost libraries. Details of the complete process are given below.
+Although we have successfully tested this system on Ubuntu 12.04.03 however it should compile and run on most of the recent Linux distributions. To compile this code on Linux distributions successfully you will need to install ImageMagick development files and C++ boost libraries. Details of the complete process are given below.
 
 1. Install the ImageMagick development libraries:
 
-Easiest but not recommended method is to download the already available compiled sources for your os (e.g. on ubuntu : sudo apt-get install libmagick++-dev). However, it is not recommended because by default, these libraries are compiled with openmp flag and lead to too much thrashing in multi-processor setup and make the overall computation slow. The recommended method is to download the source code (http://www.imagemagick.org/script/download.php) and compile it locally without openmp support i.e. ./configure --disable-openmp
+Easiest but not recommended method is to download the already available compiled sources for your os (e.g. on ubuntu : sudo apt-get install libmagick++-dev). However, it is not recommended because by default, these libraries are compiled with openmp flag and lead to too much threshing in multi-processor setup and make the overall computation slow. The recommended method is to download the source code (http://www.imagemagick.org/script/download.php) and compile it locally without openmp support i.e. ./configure --disable-openmp
 
 
 2. Install the C++ boost libraries for your OS. e.g. on Ubuntu boost libraries can be installed as follows: sudo apt-get install libboost-all-dev
@@ -50,6 +55,8 @@ Easiest but not recommended method is to download the already available compiled
 
 Hardware Requirements:
 ======================
+Running the complete system requires a machine with 8Gb memory (4Gb, if only features are computed). 
+
 
 Compiling
 ============
@@ -63,20 +70,20 @@ Compiling
 
 Basic Usage
 =============
-1. Bash Solution (For Computing Features only):
------------------------------------------------
+1. Bash (For Computing Features only):
+
 To compute the features (with default parameters) simply call computeFeatures.sh providing features type (LQP, LBP or LTP) and files containing list of images for training and codebook learning as arguments e.g.
 
 bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/ ~/dataset/lfw-list-view1.txt
 	
 Here LQP features will be computed from all the images present in the list file 'lfw-list.txt' using the codebook learned using images present in the list file 'lfw-list-view1.txt'. See the file computeFeatures.sh for further help.
 
-Please note that computed features for each are stored linearly in a separate binary file. You can read this binary file either using the provided matlab or python code.
+Please note that computed features for each input image are stored linearly in a separate binary file. You can read this binary file using the provided matlab or python code.
 
-2. Python Solution  (For features computation and face-verification)
---------------------------------------------------------------------
+2. Python (Both for features computation and face-verification)
+
 2.1. Requirements:
-For Python code to work, you will need to install following scientific packages numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy python-numpy python-matplotlib; note that Fedora needs both python-matplotlib and python-matplotlib-tk RPM's).
+For Python code to work, you will need to install following scientific packages: numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy python-numpy python-matplotlib; note that Fedora needs both python-matplotlib and python-matplotlib-tk RPM's).
 
 
 2.2. Usage:
@@ -84,10 +91,12 @@ We provide the complete python code for our face-verification algorithm [2], the
 
 python run.py --configfile=../config.py
 
+config.py can also be configured for feature computation only.
 
 Acknowledgements:
---------------------
-
+=================
+Our features computation code draws heavy influences (among others) from the public release of Felzenszwalb et.al "Discriminatively Trained Deformable Part Models" and MVG Osolo "LBP" code.
+We also acknowledge the public release of Eigen and MPI_KMEANS packages.
 
 
 
