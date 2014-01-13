@@ -36,8 +36,8 @@ References:
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.
 
 
-Requirements:
-==============
+Software Requirements:
+======================
 To compile the code successfully you will need to install ImageMagick development files and C++ boost libraries. Details of the complete process are given below.
 
 1. Install the ImageMagick development libraries:
@@ -48,7 +48,8 @@ Easiest but not recommended method is to download the already available compiled
 2. Install the C++ boost libraries for your OS. e.g. on Ubuntu boost libraries can be installed as follows: sudo apt-get install libboost-all-dev
 
 
-
+Hardware Requirements:
+======================
 
 Compiling
 ============
@@ -63,25 +64,25 @@ Compiling
 Basic Usage
 =============
 1. Bash Solution (For Computing Features only):
---------------------------------------------
-To compute the features (with default parameters) simply call computeFeatures.sh with features type and image files containing list of images for training and codebook construction  as arguments e.g.
+-----------------------------------------------
+To compute the features (with default parameters) simply call computeFeatures.sh providing features type (LQP, LBP or LTP) and files containing list of images for training and codebook learning as arguments e.g.
 
-To compute LQP/LBP/LTP features only.
-
-	bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/ ~/dataset/lfw-list-view1.txt
+bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/ ~/dataset/lfw-list-view1.txt
 	
-Where file.txt contain list of images. See the file computeFeatures.sh for further help.
+Here LQP features will be computed from all the images present in the list file 'lfw-list.txt' using the codebook learned using images present in the list file 'lfw-list-view1.txt'. See the file computeFeatures.sh for further help.
 
-1. Python Solution 
----------------
-We provide the complete code for our face-verification algorithm [2], the code can be found in face-rec directory. Further information can be obtained by reading the configuration  file ('config.py') in the face-rec. To use the code you will need to download any of the LFW aligned version --- although our code have been extensively tested with following version (http://www.openu.ac.il/home/hassner/data/lfwa/) it also works out of box for the recently released deeply-funnelled version --- and extract it somewhere on your hard disk. Next, you will need to update the first two variables (idir and odir) in 'config.py' by pointing them to the respective path. Once done simply 'cd' to code directory and execute the 'run.py' script by giving it path of configuration file. i.e.
+Please note that computed features for each are stored linearly in a separate binary file. You can read this binary file either using the provided matlab or python code.
+
+2. Python Solution  (For features computation and face-verification)
+--------------------------------------------------------------------
+2.1. Requirements:
+For Python code to work, you will need to install following scientific packages numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy python-numpy python-matplotlib; note that Fedora needs both python-matplotlib and python-matplotlib-tk RPM's).
+
+
+2.2. Usage:
+We provide the complete python code for our face-verification algorithm [2], the code can be found in face-rec directory. Further information can be obtained by reading the configuration  file ('config.py') in the face-rec directory. To use the code you will need to download any of the LFW aligned version --- although our code have been extensively tested with following version (http://www.openu.ac.il/home/hassner/data/lfwa/), however it also works out of box for the recently released deeply-funnelled version --- and extract it somewhere on your hard disk. Next, you will need to update the first two variables (idir and odir) in 'config.py' by pointing them to the respective path. Once done simply 'cd' to code directory and execute the 'run.py' script by giving it path of configuration file. i.e.
 
 python run.py --configfile=../config.py
-
-However note that for Python code to work, you will need to install following scientific packages numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy python-numpy python-matplotlib; note that Fedora needs both python-matplotlib and python-matplotlib-tk RPM's).
-
-
-
 
 
 Acknowledgements:
