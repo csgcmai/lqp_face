@@ -1,0 +1,137 @@
+"""This file contain wrapper class for CPP code for feature computation with different arguments"""
+from struct import *
+import numpy as np
+import cPickle as cp
+from scipy.io import loadmat
+from scipy.io import savemat
+import datetime, time
+import os, sys, socket, string
+from shutil import *
+import multiprocessing, argparse
+class Features:
+    """
+    
+        Main Wrapper Class used to compute different types of features by calling CPP Code:
+        Currently Supported features are LQP, LBP, LTP and LBP+LTP
+    """
+    def __init__(ftype, featdir, listfile, exefile='mainFeatures'):    
+        """
+            Initialize the different parameters for calling CPP program...
+            ftype= features type among [LBP, LTP, LBP+LTP]
+            featdir= directory path for storing feature files.
+            listfile= list file containing absolute path of images for computing features... 
+        """
+        ftype = ftype.upper()
+        
+        if not ftype in ["LQP", "LBP", "LTP", "LBP+LTP"]:
+            print 'Error: Any one of the following Feature Types should be chosen  "LQP","LBP","LTP","LBP+LTP", not %s' % ftype
+            raise ValueError
+        
+        self.ftype = ftype;
+        if not os.path.exists(featdir):
+            print 'Making Directory =', featdir
+            os.mkdir(featdir)
+        self.featdir = featdir;
+        
+        if not os.path.exists(listfile):
+            print "Error: Given file(%s) for list of images does not exist " % listfile
+            raise ValueError
+        self.listfile = listfile
+        self.rdir = os.getcwd()  # root directory
+        self.exe = os.path.normpath(os.path.join(self.rdir, os.pardir, 'build', exefile))
+    def compute(addcmd):
+        """
+            Function calls the CPP exe to compute features and logs the output information into a log file
+            addcmd= additional set of arguments.
+            On successful completion produces descriptors for given list of images... 
+        """
+        logfile = "record.log"
+        fid = open(logfile, 'wt');
+        fid.write("Running on " + socket.gethostname())
+        fid.write("\nIn the Dir = " + os.getcwd())
+        today = datetime.date.today()
+        date = today.strftime('%a %b %d %Y')
+        fid.write("\nOn Following Date=" + date)
+        print "Appended Command = ", addcmd
+        fid.write("\nAppended Command = " + addcmd)
+        fid.close();
+    
+        # Different Program option values, as dictionary items used during 
+        values = {'exefile':self.exe, 'color_channel':4, 'add_rgb':1, 'norm_sep':0, 'cell_size':10, 'lbp_stride':10 }
+        cmd = string.Template("${exefile} --Color-Channel=${color_channel} --Add-RGBLBP=${add_rgb}  --Norm-Sep=${norm_sep} --Cell-Size=${cell_size} --LBP-Stride=${lbp_stride}")
+        cmd = cmd.safe_substitute(values)
+        cmd = addcmd + cmd + " >> " + logfile
+        st = time.time()
+        print " Computing Features ... \n", cmd
+        os.system(cmd)
+        tt = time.time() - st
+        print " Finished Computing Features, Total Time Taken = %f sec (%f min)" % (tt, tt / 60)
+
+    def compute_lqp(lqpsize=[5], cbsize=[150], tolerance=[7]):
+        """
+            Compute LQP Features, 
+            can be configured to run with different set of LQP types, coding types, tolerance, codebook size etc.
+        """  
+        values = { 'feature_type':14, 'cb_distance':0,
+                 'ncluster_rounds':10,
+                 'code_prune_count':10,
+                 'lqp_stride':1, 'norm':1, 'patch_type':2, 'code_type':4}
+        cmd = string.Template("./${exefile}  --FeatureType=${feature_type}  --PatchType=${patch_type}"\
+                            " --CodeBook-DMetric=${cb_distance} --ClusteringRounds=${ncluster_rounds}"\
+                            "--Patch-PruneCount=${code_prune_count} --Patch-PatchStride=${lqp_stride}"\
+                            " --Patch-CodingType=${code_type} --Normalization=${norm} ")
+        cmd = cmd.safe_substitute(values)
+                           
+                
+        count = 1
+        for tol in tolerance:
+            for lqps in lqpsize:
+                for cbs in cbsize:
+                    os.chdir(featdir)
+                    dirname = 'lqp-size=' + str(lqps) + '-codebooksize=' + str(cbs) + '-tolerance=' + str(tol)
+                    dirname = os.path.join(featdir, dirname)
+                    if not os.path.exists(dirname):
+                        print 'Making Directory =', dirname
+                        os.mkdir(dirname)
+                    os.chdir(dirname)              
+                    values = {'tol':tol, 'cbsize':cbs, 'patch_size':lqps}
+                    addcmd = string.Template(" --LTP-Tolerance=${tol} --CodeBookSize=${cbsize}  --Patch-PatchSize=${patch_size} ")
+                    addcmd = addcmd.safe_substitute(values)
+                    print  "Running Process Number = ", count
+                    count = count + 1
+                    p = multiprocessing.Process(target=compute, args=(addcmd,))
+                    p.daemon = True  # Make it a daemon process
+                    p.start()
+    
+    def compute_localpattern():
+        """
+            Function is used to compute Local Pattern (LBP, LTP, Features:
+            
+        """
+        features = {"LBP":1, "LTP":2, "LBP+LTP":3}
+        values = {'feature_type': features[ftype], 'norm':1}
+        cmd = string.Template("./${exefile}  --FeatureType=${feature_type}  --Normalization=${norm} ")
+        cmd = cmd.safe_substitute(values)
+        tolerance = [5]
+        
+        count = 1
+        for tol in tolerance:
+            os.chdir(featdir)
+            dirname = ftype + '-tolerance=' + str(tol)
+            dirname = os.path.join(featdir, dirname)
+            if not os.path.exists(dirname):
+                print 'Making Directory =', dirname
+                os.mkdir(dirname)
+            copy('../build/' + exefile, dirname)  # *.lst trainval.txt  removefile.sh
+            os.chdir(dirname)              
+            values = {'tol':tol}
+            addcmd = string.Template(" --LTP-Tolerance=${tol} ")
+            addcmd = addcmd.safe_substitute(values)
+            print  "Running Process Number = ", count
+            count = count + 1
+            p = multiprocessing.Process(target=compute, args=(addcmd,))
+            p.daemon = True  # Make it a daemon process
+            p.start()
+            
+if __name__ == "__main__":
+    compute('/tmp/', './mainFeatures ')
