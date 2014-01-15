@@ -1,15 +1,15 @@
 # Configuration file with default options,
 # There are four main sections: General, Features, LQP and Learning corresponding to different 
-# functionalities. You can disable any of the Features and Learning section (by commenting it out) according to your requirement.
+# functionalities. You can disable any of the Features or Learning section (by commenting it out) according to your requirement.
 [General] 
-#general options
-idir=/home/hussain/datasets/LFW/lfw-deepfunneled/ # path of the folder where LFW-Aligned images have been extracted
-odir=/scratch/testing/experiments-deeply-funelled-xoffset=0-yoffset=0 # path where cropped_images, learned model
+# general options
+idir=/home/hussain/datasets/LFW/lfwa # path of folder where images are stored
+odir=/scratch/testing/experiments/ # path where cropped_images, learned model and computed features will be stored
 #   				          and computed features will be stored
 dataset=LFW # name of dataset to use either can be LFW or FERET (currently not-supported)
 width=80 # width of cropped images
 height=150 # height of cropped images
-padding=10 # (same as cellsize) use a padding of one cell
+padding=10 # (same as cellsize) use a padding of one cell on each side. This value must be same as the option cell-size has in the features section
 #	           on each side this value must be same as cell-size in features section (see below)
 xoffset=0 # Offset to be added (from the center position) to the crop window position
 #                  placed over the original lfwa image
@@ -35,7 +35,7 @@ lqpsize=7 # LQP size represent radius (length of strip)
 coding=4 # LQP encoding type can be: Binary (0), Ternary (1) or Split-Ternary (4)
 cbsize=150 # Codebook size (number of visual words) used for
 #                     LQP computation (can pass a list, i.e. cbsize=[100, 150]
-cbfile="" #  A list file containing list of images for learning the codebook
+cbfile="" # [Optional] A list file containing list of images for learning the codebook
                    
 [Learning] 
 #options for model learning

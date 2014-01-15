@@ -9,8 +9,8 @@ odir=/scratch/testing/experiments/ # path where cropped_images, learned model
 dataset=LFW # name of dataset to use either can be LFW or FERET (currently not-supported)
 width=80 # width of cropped images
 height=150 # height of cropped images
-padding=10 # (same as cellsize) use a padding of one cell
-#	           on each side this value must be same as cell-size in features section (see below)
+padding=10 # (same as cellsize) use a padding of one cell on each side this value must be same as the option cell-size has in the features section
+xoffset=1 # offsets to be added to the crop window placed over the original aligned images
 xoffset=1 # Offset to be added (from the center position) to the crop window position
 #                  placed over the original lfwa image
 yoffset=-4
