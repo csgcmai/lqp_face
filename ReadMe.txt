@@ -44,7 +44,7 @@ References:
      Patterns", In 12th European Conference on Computer Vision (ECCV), 2012.  
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local
      Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.
-[3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", Thesis
+[3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis
      University of Grenoble, 2011.
 
 
@@ -52,7 +52,7 @@ Software Requirements:
 ======================
 Although we have successfully tested this system on Ubuntu 12.04.03 however it
 should compile and run on most of the recent Linux distributions. To compile
-this code on Linux distributions successfully you will need to install
+the code successfully  you will need to install
 ImageMagick development files and C++ boost libraries. Details of the complete
 process are given below.
 
@@ -105,8 +105,9 @@ Here LQP features will be computed from all the images present in the list file
 'lfw-list-view1.txt'. See the file computeFeatures.sh for further help.
 
 Please note that computed features for each input image are stored linearly in a
-separate binary file. You can read this binary file using the provided matlab or
-python code.
+separate binary file. You can read this binary file using the provided Matlab
+(readFeatureFile in matlab directory) or python code (function read_feature_file
+in face-rec/code/trainAndEvaluateLFW.py).
 
 2. Python (Both for features computation and face-verification)
 ---------------------------------------------------------------
@@ -133,7 +134,20 @@ giving it path of configuration file. i.e.
 
 python run.py --configfile=../config.py
 
-config.py can also be configured for feature computation only.
+On successful completion computed features can be located in directory
+'odir/features', whereas learned models on different feature types with
+different parameters can be located 'odir/features/data'. Learned models are
+numpy binary files and can be loaded into python by calling load function of
+numpy.
+
+For computing features only, you can either configure config.py or call run.py
+with command line arguments. Call run.py with '--help' flag to see all the available
+command line options.
+
+However before running through set of experiments we recommend you to run
+the test script. This script will hopefully enable you to find out potential
+problems (if any) with your installation. See the 'test.py' for further details
+and options. 
 
 Acknowledgements:
 =================
