@@ -3,17 +3,19 @@
 import run as r
 import os, sys
 from ConfigParser import SafeConfigParser
-def parseFile(idir='./',odir='./'):
+def parseConfigFile(idir='',odir='./'):
     '''
         Generate configuration files for the test set.
         These configuration files are for LTP features.
     '''
-    
+    pwd = os.getcwd();
+    os.chdir('../');
     parser = SafeConfigParser()
     parser.read('config.py')
     cfnames = ['config_LTP_view1_wpca.py', 'config_LTP_view2_wpca.py', 'config_LTP_pca.py']
+    if len(idir) > 0:
+        parser.set('General', 'idir', idir)
     
-    parser.set('General', 'idir', idir)
     parser.set('General', 'odir', odir)
     parser.set('General', 'ftype', 'LTP')
     
@@ -33,6 +35,8 @@ def parseFile(idir='./',odir='./'):
             parser.set('Learning','dist','cosine')
         parser.write(wf)
         wf.close()
+    os.chdir(pwd)
+    return cfnames
     
     for section_name in parser.sections():
         print 'Section:', section_name
@@ -114,7 +118,8 @@ def main():
         if idir != '' and not os.path.exists(idir):
             raise ValueError("Input Image directory %s does not exist" % idir)
 #         print "Idir= %s, Odir=%s" % (idir, odir)
-        cfnames = genConfigFiles(idir, odir)
+        #cfnames = genConfigFiles(idir, odir)
+        cfnames = parseConfigFile(idir, odir)
         for i, fname in enumerate(cfnames):
             print "Running %d Test case" % (i + 1)
             sys.argv = ['', os.path.join(os.path.pardir, fname)];
