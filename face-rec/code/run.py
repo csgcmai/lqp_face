@@ -58,7 +58,7 @@ class ArgumentParser:
     def __init__(self, v=1.0):
         ''' Initializes Argument Parser class to 
         parse a particular class type arguments, options can be: [features,learning,complete] '''
-        
+        #print sys.argv[1:]
         self.args = sys.argv[1:]
         
         config_parser = argparse.ArgumentParser(

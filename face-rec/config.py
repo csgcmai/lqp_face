@@ -5,7 +5,7 @@
 [General] 
 # general options
 idir=/home/hussain/datasets/LFW/lfwa # images directory path
-odir=/scratch/testing/experiments/ # path where cropped_images, learned model and computed features will be stored
+odir=/scratch/testing/new-experiments/ # path where cropped_images, learned model and computed features will be stored
 dataset=LFW # name of dataset to use; it can be either LFW or FERET [currently not supported]
 width=80 # width of cropped images
 height=150 # height of cropped images
