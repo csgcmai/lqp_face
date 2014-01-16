@@ -5,8 +5,9 @@ import run as r
 import os, sys
 from ConfigParser import SafeConfigParser
 def getOutputDir():
+    print os.getcwd()
     parser = SafeConfigParser()
-    parser.read('../config_LTP_view1_wpca.py')
+    parser.read('face-rec/config_LTP_view1_wpca.py')
     return parser.get('General', 'odir').split('=', 1)[0]
     
 def parseConfigFile(idir='', odir='./'):
