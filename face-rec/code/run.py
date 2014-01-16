@@ -21,9 +21,9 @@ from scipy.misc import imsave
 class CommentlessFile(file):
     ''' A class for removing comments from the config file '''
     def readline(self):
-        line = super(CommentlessFile, self).readline()
+        line = super(CommentlessFile, self).readline() # call superclass readline method
         if line:
-            line = line.split(';', 1)[0].strip()
+            line = line.split(';', 1)[0].strip() # for inline comments 
             line = line.split('#', 1)[0].strip()
             return line + '\n'
         else:

@@ -103,7 +103,7 @@ def read_descriptors(inames, featdir, ftype, dstr=""):
     """
      Read Descriptors for the given list of images and return 
     function [litem,ritem,flitem,fritem,nd]=readDescriptors(inames,featdir,ftype,dstr,pprocess,nd)
-    read the descriptors written by mfiles
+    read the descriptors written by cpp code
     iname: name of images
     featdir:feature directory containing computed features.
     ftype: [LBP, LTP, LQP]
@@ -218,7 +218,7 @@ def train_test_pca(data, featdir, ftype, pcadim, filesuffix, distance):
     """
     pcaTrain, pcalabel, thTrain, thlabel, test, testlabels = data
      
-    if isinstance(pcadim, list): #and len(pcadim) > 1:
+    if isinstance(pcadim, list):  # and len(pcadim) > 1:
         ncomp = max(pcadim)
     else:
         ncomp = pcadim
