@@ -1,14 +1,25 @@
 #!/bin/python
+"""
+Copyright (c) 2013, Sibt ul Hussain <sibt.ul.hussain at gmail dot com>
+All rights reserved.
+Released under BSD License
+-------------------------
+For license terms please see license.lic
+"""
+
+
 # Test script for testing the features...
-# This script first generates the configuration files and then perform the learning of data
+# This script first generates the configuration files and then runs experiments
 import run as r
 import os, sys
 from ConfigParser import SafeConfigParser
-def getOutputDir():
-    print os.getcwd()
+def getConfigParameters():
+    # print os.getcwd()
     parser = SafeConfigParser()
     parser.read('face-rec/config_LTP_view1_wpca.py')
-    return parser.get('General', 'odir').split('=', 1)[0]
+    odir = parser.get('General', 'odir').split('=', 1)[0]
+    ftype = parser.get('General', 'ftype').split('=', 1)[0]
+    return odir, ftype
     
 def parseConfigFile(idir='', odir='./'):
     '''
@@ -51,92 +62,39 @@ def parseConfigFile(idir='', odir='./'):
         for name, value in parser.items(section_name):
             print ' % s = % s' % (name, value)
         print
-# 
-# def genConfigFiles(idir='./', odir='./'):
-#     '''
-#         Generate configuration files for the test set.
-#         These configuration files are for LTP features.
-#     '''
-#     pwd = os.getcwd();
-#     os.chdir('../');
-#     parseFile()
-#     f = open('config.py', 'r');
-#     
-#     cfnames = ['config_LTP_view1_wpca.py', 'config_LTP_view2_wpca.py', 'config_LTP_pca.py']
-#     for fname in cfnames:
-#         wf = open(fname, 'w');
-#         for l in f:
-#             # print l, len(l)
-#             l = l.lstrip().rstrip()
-#             if len(l) > 0 and  l.lstrip()[0] != '#':
-#                 sstr = l.split('=')
-#                 if sstr[0] == 'idir' and len(idir) > 0:
-#                     print 'Input Directory = ', sstr[1]
-#                     l = 'idir=' + idir;
-#                 elif sstr[0] == 'odir':
-#                     print 'Output Directory = ', sstr[1]
-#                     l = 'odir=' + odir;                    
-#                 elif sstr[0] == 'ftype':
-#                     print 'Feature Type = ', sstr[1]
-#                     l = 'ftype=LTP';
-#                 elif sstr[0] == 'view':
-#                     
-#                     print 'View = ', sstr[1]
-#                     if fname == 'config_LTP_view1_wpca.py':
-#                         l = 'view=view1';
-#                     elif fname == 'config_LTP_view2_wpca.py':
-#                         l = 'view=view2';
-#                     else:
-#                         l = 'view=complete';
-#                     
-#                 elif sstr[0] == 'dist':
-#                     print 'Distance = ', sstr[1]            
-#                     if fname == 'config_LTP_pca.py':
-#                         l = 'dist=cosine'
-#                     else:
-#                         l = 'dist=chi-square'
-#                 elif sstr[0] == 'ttype':
-#                     print 'Distance = ', sstr[1]            
-#                     if fname == 'config_LTP_pca.py':
-#                         l = 'ttype=with-pca'
-#                     else:
-#                         l = 'ttype=without-pca'                    
-#             wf.write(l + '\n')
-#         wf.close()
-#         f.seek(0)
-#         os.chdir(pwd)
-#     return cfnames
 def main():
     ''' main testing function... '''
     print len(sys.argv)
-    if len(sys.argv) != 2 and len(sys.argv) != 3:
+    if not (len(sys.argv) >= 2 and len(sys.argv) <= 4):
         print "Invalid Number of Arguments: Please provide path to output directories [input directory path optional], i.e."
-        print "python demo.py path_to_odir path_to_idir[optional]"
+        print "python demo.py path_to_odir path_to_idir[optional] number_of_experiments[optional]"
         return
     else:
         odir = sys.argv[1]
         print 'Output Directory = ', odir
         idir = ''
+        nexp = 3
         if len(sys.argv) == 3:
             idir = sys.argv[2]
             print 'Input Directory = ', idir
+        if len(sys.argv) == 4:
+            nexp = int(sys.argv[3])
         
+        print 'Number of Experiments = ', idir
             
         if idir != '' and not os.path.exists(idir):
             raise ValueError("Input Image directory %s does not exist" % idir)
 #         print "Idir= %s, Odir=%s" % (idir, odir)
         # cfnames = genConfigFiles(idir, odir)
         cfnames = parseConfigFile(idir, odir)
-        for i, fname in enumerate(cfnames):
+        for i  in range(0, min(nexp, len(cfnames))):
             print "Running Test case Number %d" % (i + 1)
-            sys.argv = ['', '--configfile=' + os.path.join(os.path.pardir, fname)];
+            sys.argv = ['', '--configfile=' + os.path.join(os.path.pardir, cfnames[i])];
             print sys.argv
             # now call the running routine...
-            r.main()
-    
+            r.main()   
           
      
 if __name__ == "__main__":
-#     prepare_list('/home/hussain/datasets/LFW/lfwa', '/tmp')
-     print 'ARGV:', sys.argv[1:]
-     sys.exit(main())       
+    print 'ARGV:', sys.argv[1:]
+    sys.exit(main())       

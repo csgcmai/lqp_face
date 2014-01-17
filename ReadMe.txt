@@ -20,6 +20,7 @@ g++: Version 4.6.3
 Boost (http://www.boost.org/): Version 1.46
 Eigen (http://eigen.tuxfamily.org): Version 2.0 (included in this distribution)
 MPI_KMEANS (http://mloss.org/software/view/48/): Version 1.5 (included in this distribution)
+IPython (http://ipython.org): Version 0.12.1 (optional for notebooks)
 
 There may be compatibility issues with other versions of libraries.
 
@@ -138,16 +139,35 @@ On successful completion computed features can be located in directory
 'odir/features', whereas learned models on different feature types with
 different parameters can be located 'odir/features/data'. Learned models are
 numpy binary files and can be loaded into python by calling load function of
-numpy.
+numpy. Apart from config.py, there are other example configuration files that
+can be found in the same directory.
 
 For computing features only, you can either configure config.py or call run.py
-with command line arguments. Call run.py with '--help' flag to see all the available
-command line options.
+with command line arguments. Call run.py with '--help' flag to see all the
+available command line options.
 
-However before running through set of experiments we recommend you to run
-the test script. This script will hopefully enable you to find out potential
-problems (if any) with your installation. See the 'test.py' for further details
-and options. 
+2.3 Demo 
+However before running a thorough set of experiments we recommend you to run
+the demo script, i.e.
+
+python demo.py path_to_output_dir path_to_LFWA_images_folder number_of_experiments
+
+E.g.
+
+python demo.py /tmp/experiments /data/lfwa 2
+
+This script will hopefully enable you to find out potential problems (if any)
+with your installation. This demo script will (by default) run three experiments
+using LTP features. Note that running the complete demo program requires a
+system with 3Gb memory and takes around 1.5 hours on an i7 machine. Running only
+two experiments takes around 8 minutes. See 'demo.py' for further details and
+options. 
+
+Once done you can run the demo notebook (demo.ipynb) to visualize the results.  
+
+You can visualize the demo results directly without running the experiments by
+either running the demo-nb.html or running the provided demo notebook. We also provide
+some excerpts from our experiments notebook (see feat-exp-nb.html).
 
 Acknowledgements:
 =================
