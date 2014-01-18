@@ -5,7 +5,7 @@ Project webpage: http://sites.google.com/site/sibtulhussain/research/.
 
 This is an implementation of our face verification system [2] based on Local
 Quantized Pattern features [1, 3]. The current implementation is the replica of
-learning code used in [2], however the feature computation code is the original
+MATLAB learning code used in [2], however the feature computation code is the original
 one [1].
 
 The current distribution contains code for computing local pattern features
@@ -15,17 +15,17 @@ while the learning code is written in python. We also provide scripts (both in
 both python and bash) for computing features only. The software was tested on
 Ubuntu 12.04.03 with the libraries mentioned as follows. 
 
-ImageMagick (http://www.imagemagick.org/script/install-source.php): Version 6.8.1 Q16
-g++: Version 4.6.3
-Boost (http://www.boost.org/): Version 1.46
-Eigen (http://eigen.tuxfamily.org): Version 2.0 (included in this distribution)
-MPI_KMEANS (http://mloss.org/software/view/48/): Version 1.5 (included in this distribution)
-IPython (http://ipython.org): Version 0.12.1 (optional for notebooks)
+[ImageMagick](http://www.imagemagick.org/script/install-source.php) version 6.8.1,
+g++ version 4.6.3,
+[Boost](http://www.boost.org/) version 1.46,
+[Eigen](http://eigen.tuxfamily.org) version 2.0 (included in this distribution),
+[MPI_KMEANS](http://mloss.org/software/view/48/) version 1.5 (included in this distribution),
+[IPython](http://ipython.org) version 0.12.1 (optional for notebooks)
 
 There may be compatibility issues with other versions of libraries.
 
 For questions concerning the code please contact Sibt ul Hussain at
-<sibt Dot ul Dot Hussain AT gmail DOT com>.
+*sibt dot ul dot Hussain at gmail dot com*.
 
 This project has been supported by grants from Higher Education Commission (HEC)
 of Pakistan, European Union Project CLASS, and French ANR i.e.
@@ -44,14 +44,13 @@ References:
 [1]. S. Hussain and B. Triggs, "Visual Recognition using Local Quantized
      Patterns", In 12th European Conference on Computer Vision (ECCV), 2012.  
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local
-     Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.
+     Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.  
 [3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis
      University of Grenoble, 2011.
-
-
+    
 Software Requirements:
 ======================
-Although we have successfully tested this system on Ubuntu 12.04.03 however it
+Although we have successfully tested this system on Ubuntu 12.04 however it
 should compile and run on most of the recent Linux distributions. To compile
 the code successfully  you will need to install
 ImageMagick development files and C++ boost libraries. Details of the complete
@@ -83,7 +82,7 @@ Compiling
  cd features
  make all 
   or
- make -j all (to compile the files in parallel in multi-processor setup)
+ make -j all (to compile the files in parallel in a multi-processor setup)
 
 2. On successful completion executable file named mainFeatures will be generated
 and can be located in the build directory. Help on all the available options can
@@ -112,15 +111,13 @@ in face-rec/code/trainAndEvaluateLFW.py).
 
 2. Python (Both for features computation and face-verification)
 ---------------------------------------------------------------
-
-2.1. Requirements:
+**2.1. Requirements:**
 For Python code to work, you will need to install following scientific packages:
 numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy
 python-numpy python-matplotlib; note that Fedora needs both python-matplotlib
 and python-matplotlib-tk RPM's).
 
-
-2.2. Usage:
+**2.2. Usage:**
 We provide the complete python code for our face-verification algorithm [2], the
 code can be found in face-rec directory. Further information can be obtained by
 reading the configuration file ('config.py') in the face-rec directory. To use
@@ -137,7 +134,7 @@ python run.py --configfile=../config.py
 
 On successful completion computed features can be located in directory
 'odir/features', whereas learned models on different feature types with
-different parameters can be located 'odir/features/data'. Learned models are
+different parameters can be located in 'odir/features/data'. Learned models are
 numpy binary files and can be loaded into python by calling load function of
 numpy. Apart from config.py, there are other example configuration files that
 can be found in the same directory.
@@ -146,28 +143,25 @@ For computing features only, you can either configure config.py or call run.py
 with command line arguments. Call run.py with '--help' flag to see all the
 available command line options.
 
-2.3 Demo 
-However before running a thorough set of experiments we recommend you to run
-the demo script, i.e.
-
-python demo.py path_to_output_dir path_to_LFWA_images_folder number_of_experiments
-
-E.g.
+**2.3. Demo:** 
+However before running a thorough set of experiments we recommend you to run the
+demo script providing paths to ouput directory and input directory (LFWa folder)
+and number of experiments --- this argument for number of experiments is
+optional, by default demo script runs three experiments using LTP features --- to
+run in demo.py. E.g. to run demo.py with a set of 2  experiments we call it as follows:
 
 python demo.py /tmp/experiments /data/lfwa 2
 
 This script will hopefully enable you to find out potential problems (if any)
-with your installation. This demo script will (by default) run three experiments
-using LTP features. Note that running the complete demo program requires a
+with your installation. Note that running the complete demo program requires a
 system with 3Gb memory and takes around 1.5 hours on an i7 machine. Running only
-two experiments takes around 8 minutes. See 'demo.py' for further details and
-options. 
-
-Once done you can run the demo notebook (demo.ipynb) to visualize the results.  
+two experiments takes around 8 minutes. See 'demo.py' for further details,
+options and possible configurations for other feature types. Once done you can
+run the demo notebook (demo.ipynb) to visualize the results.  
 
 You can visualize the demo results directly without running the experiments by
-either running the demo-nb.html or running the provided demo notebook. We also provide
-some excerpts from our experiments notebook (see feat-exp-nb.html).
+either running the demo-nb.html or running the provided demo notebook. We also
+provide some excerpts from our experiments notebook (see feat-exp-nb.html). 
 
 Acknowledgements:
 =================

@@ -30,6 +30,10 @@ def parseConfigFile(idir='', odir='./'):
     os.chdir('../');
     parser = SafeConfigParser()
     parser.read('config.py')
+    # Configuration files for three different expeirments
+    # 1. LTP Features with Chi-square similarity (without PCA learning) on view1
+    # 2. LTP Features with Chi-square similarity (without PCA learning) on view2.
+    # 3. LTP Features with cosine similarity on view1 (for cross-validation) and view2 (testing).
     cfnames = ['config_LTP_view1_wpca.py', 'config_LTP_view2_wpca.py', 'config_LTP_pca.py']
     if len(idir) > 0:
         parser.set('General', 'idir', idir)
