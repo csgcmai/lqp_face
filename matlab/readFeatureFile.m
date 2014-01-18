@@ -1,3 +1,9 @@
+% Copyright (c) 2013, Sibt ul Hussain <sibt.ul.hussain at gmail dot com>
+% All rights reserved.
+% Released under BSD License
+% -------------------------
+% For license terms please see license.lic
+
 function [feat,nrows,colsize]=readFaceFeatureFile(fname)
 % function reads the binary feature files written by cpp code.
 % input --> fname: binary file name

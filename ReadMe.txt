@@ -85,6 +85,7 @@ Compiling
  make all 
   or
  make -j all (to compile the files in parallel in a multi-processor setup)
+ Please see Makefile for other compiler options. 
 
 2. On successful completion executable file named mainFeatures will be generated
 and can be located in the build directory. Help on all the available options can
@@ -174,5 +175,5 @@ public release of Felzenszwalb et.al "Discriminatively Trained Deformable Part
 Models" and MVG Osolo "LBP" code. We also acknowledge the public release of
 Eigen and MPI_KMEANS packages.
 
-Thanks to Alexis Mignon for providing python code for computing PCA and
+Thanks to Alexis Mignon for providing his python code for computing PCA and
 Thibault Napoleon for his valuable feedback.

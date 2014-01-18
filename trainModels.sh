@@ -6,6 +6,7 @@
 # -------------------------
 # For license terms please see license.lic
 
+#Example bash file for running experiments using python code.
 
 srcdir=${PWD}
 outputfile=record_trained_on_view1
