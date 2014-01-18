@@ -165,8 +165,9 @@ Once done with the experiments, you can run the demo notebook (demo.ipynb) to
 visualize the results.  
 
 You can visualize the demo results directly without running the experiments by
-either running the demo-nb.html or running the provided demo notebook. We also
-provide some excerpts from our experiments notebook (see feat-exp-nb.html). 
+either opening the demo-nb.pdf or running the provided demo notebook. We also
+provide some excerpts from our experiments notebook (see lqp-face-recog-release-nb.pdf
+or lqp-face-recog-release.ipynb). 
 
 Acknowledgements:
 =================
