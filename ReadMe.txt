@@ -1,3 +1,6 @@
+Local Quantized Patterns Based Visual Recognition
+=================================================
+
 Information
 ===========
 
@@ -51,19 +54,18 @@ References:
 Software Requirements:
 ======================
 Although we have successfully tested this system on Ubuntu 12.04 however it
-should compile and run on most of the recent Linux distributions. To compile
-the code successfully  you will need to install
-ImageMagick development files and C++ boost libraries. Details of the complete
-process are given below.
+should compile and run on most of the recent Linux distributions. To compile the
+code successfully you will need to install ImageMagick development files and C++
+boost libraries. Details of the libraries installation process are given below.
 
 1. Install the ImageMagick development libraries. Easiest but not recommended
-method is to download the already available compiled
-sources for your os (e.g. on ubuntu : sudo apt-get install libmagick++-dev).
-However, it is not recommended because by default, these libraries are compiled
-with openmp flag and lead to too much threshing in multi-processor setup and
-make the overall computation slow. The recommended method is to download the
-source code (http://www.imagemagick.org/script/download.php) and compile it
-locally without openmp support i.e. ./configure --disable-openmp
+method is to download the already available compiled sources for your os (e.g.
+on ubuntu : sudo apt-get install libmagick++-dev). However, it is not
+recommended because by default, these libraries are compiled with openmp flag
+and lead to too much threshing in multi-processor setup and make the overall
+computation slow. The recommended method is to download the source code
+(http://www.imagemagick.org/script/download.php) and compile it locally without
+openmp support i.e. ./configure --disable-openmp
 
 
 2. Install the C++ boost libraries for your OS. e.g. on Ubuntu boost libraries
@@ -90,12 +92,12 @@ be obtained by calling mainFeatures with help flag i.e. mainFeatures --help
 
 Basic Usage
 =============
-1. Bash (For Computing Features only):
+1. Bash (For computing features only):
 --------------------------------------
 
 To compute the features (with default parameters) simply call computeFeatures.sh
 providing features type (LQP, LBP or LTP) and files containing list of images
-for training and codebook learning as arguments e.g.
+for training and codebook learning (for LQP) as arguments e.g.
 
 bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/
 ~/dataset/lfw-list-view1.txt
@@ -133,11 +135,11 @@ giving it path of configuration file. i.e.
 python run.py --configfile=../config.py
 
 On successful completion computed features can be located in directory
-'odir/features', whereas learned models on different feature types with
-different parameters can be located in 'odir/features/data'. Learned models are
-numpy binary files and can be loaded into python by calling load function of
-numpy. Apart from config.py, there are other example configuration files that
-can be found in the same directory.
+'odir/features/feature-type', whereas learned models on different feature types
+with different parameters can be located in 'odir/features/feature-type/data'.
+Learned models are numpy binary files and can be loaded into python by calling
+load function of numpy. Apart from config.py, there are other example
+configuration files that can be found in the same directory.
 
 For computing features only, you can either configure config.py or call run.py
 with command line arguments. Call run.py with '--help' flag to see all the
@@ -145,10 +147,10 @@ available command line options.
 
 **2.3. Demo:** 
 However before running a thorough set of experiments we recommend you to run the
-demo script providing paths to ouput directory and input directory (LFWa folder)
+demo script providing paths to output directory and input directory (LFWa folder)
 and number of experiments --- this argument for number of experiments is
-optional, by default demo script runs three experiments using LTP features --- to
-run in demo.py. E.g. to run demo.py with a set of 2  experiments we call it as follows:
+optional, by default demo script runs three experiments using LTP features. 
+E.g. to run demo.py with a set of 2  experiments we call it as follows:
 
 python demo.py /tmp/experiments /data/lfwa 2
 
@@ -156,8 +158,10 @@ This script will hopefully enable you to find out potential problems (if any)
 with your installation. Note that running the complete demo program requires a
 system with 3Gb memory and takes around 1.5 hours on an i7 machine. Running only
 two experiments takes around 8 minutes. See 'demo.py' for further details,
-options and possible configurations for other feature types. Once done you can
-run the demo notebook (demo.ipynb) to visualize the results.  
+options and possible configurations for other feature types. 
+
+Once done with the experiments, you can run the demo notebook (demo.ipynb) to
+visualize the results.  
 
 You can visualize the demo results directly without running the experiments by
 either running the demo-nb.html or running the provided demo notebook. We also
