@@ -50,5 +50,8 @@ dist=cosine #  Distance metric for comparing features. Choices are cosine, chi-s
 pcadim=[100,  200,  300,  400,  500,  600,  700,  800,  900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000] #  Number of PCA components. You can pass a scalar or list, i.e.
 #                        pcadim= 500. In case of a list, all the dimensions will be used
 #                        for model learning (on view1) and finally only the best performing one will be 
-#                        kept
+#                        kept. Note that a single model with max(pcadim) is learned in this case
+#                        but evaluation is done using all the dimensions.
+# 			 Caution: providing a much higher dimension makes the learning slow and memory
+#                        intensive
 

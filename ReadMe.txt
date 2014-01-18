@@ -139,8 +139,7 @@ On successful completion computed features can be located in directory
 'odir/features/feature-type', whereas learned models on different feature types
 with different parameters can be located in 'odir/features/feature-type/data'.
 Learned models are numpy binary files and can be loaded into python by calling
-load function of numpy. Apart from config.py, there are other example
-configuration files that can be found in the same directory.
+load function of numpy. 
 
 For computing features only, you can either configure config.py or call run.py
 with command line arguments. Call run.py with '--help' flag to see all the
