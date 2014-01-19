@@ -68,7 +68,7 @@ def parseConfigFile(idir='', odir='./'):
         print
 def main():
     ''' main testing function... '''
-    print len(sys.argv)
+#    print len(sys.argv)
     if not (len(sys.argv) >= 2 and len(sys.argv) <= 4):
         print "Invalid Number of Arguments: Please provide path to output directories [input directory path optional], i.e."
         print "python demo.py path_to_odir path_to_idir[optional] number_of_experiments[optional]"
@@ -84,7 +84,7 @@ def main():
         if len(sys.argv) == 4:
             nexp = int(sys.argv[3])
         
-        print 'Number of Experiments = ', idir
+        print 'Number of Experiments = ', nexp
             
         if idir != '' and not os.path.exists(idir):
             raise ValueError("Input Image directory %s does not exist" % idir)
@@ -100,5 +100,5 @@ def main():
           
      
 if __name__ == "__main__":
-    print 'ARGV:', sys.argv[1:]
+    #	print 'ARGV:', sys.argv[1:]
     sys.exit(main())       
