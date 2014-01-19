@@ -1,4 +1,4 @@
-Local Quantized Patterns Based Face Recognition
+Face Recognition Using Local Quantized Patterns
 =================================================
 
 Information
