@@ -16,7 +16,7 @@ srcdir=${PWD}
 exefile=${srcdir}/build/mainFeatures # mainFeatures-large
 efname="runExp.sh"
 nthreads=1 #number of threads
-suffix="-UOMap"
+suffix=""
 computeLQP()
 {
 ftype=14
@@ -142,14 +142,13 @@ lbp()
 
 if [ $# -lt 3 ]
 then
-	echo "Error Wrong Number of Arguments: <$0  feature_type[ lbp or ltp or lqp or lbp+ltp] path_of_file_containing_list_of_images[./face-recog-100x170.txt] dir[directory path for storing feature files.] optional: path_of_a_separate_file_containing_list_of_images_for_codebook_learning> e.g
+	echo "Error Wrong Number of Arguments: <$0  feature_type [lbp or ltp or lqp or lbp+ltp] path_of_file_containing_list_of_images [./face-recog-100x170.txt] dir [directory path for storing feature files.] optional: path_of_a_separate_file_containing_list_of_images_for_codebook_learning> e.g
 	bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/ ~/dataset/lfw-list-view1.txt"
 	exit
 #	return
 fi
 
 mdir=$3
-echo ${mdir}[0]
 if [ ! -d $mdir ]
 then
 	echo "Making Directory ${mdir}"

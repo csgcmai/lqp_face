@@ -1,4 +1,4 @@
-Local Quantized Patterns Based Visual Recognition
+Local Quantized Patterns Based Face Recognition
 =================================================
 
 Information
@@ -15,7 +15,7 @@ The current distribution contains code for computing local pattern features
 (LBP, LTP, LQP, etc.) and unsupervised learning, as well as models trained on
 Labelled Faces in Wild datasets. Feature computation code is implemented in C++,
 while the learning code is written in python. We also provide scripts (both in
-both python and bash) for computing features only. The software was tested on
+python and bash) for computing features only. The software was tested on
 Ubuntu 12.04.03 with the libraries mentioned as follows. 
 
 [ImageMagick](http://www.imagemagick.org/script/install-source.php) version 6.8.1,
@@ -85,7 +85,7 @@ Compiling
  make all 
   or
  make -j all (to compile the files in parallel in a multi-processor setup)
- Please see Makefile for other compiler options. 
+ Please see Makefile for other compilation options. 
 
 2. On successful completion executable file named mainFeatures will be generated
 and can be located in the build directory. Help on all the available options can
@@ -98,14 +98,15 @@ Basic Usage
 
 To compute the features (with default parameters) simply call computeFeatures.sh
 providing features type (LQP, LBP or LTP) and files containing list of images
-for training and codebook learning (for LQP) as arguments e.g.
+for training and codebook learning (for LQP only) as arguments e.g.
 
 bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/
 ~/dataset/lfw-list-view1.txt
 	
 Here LQP features will be computed from all the images present in the list file
 'lfw-list.txt' using the codebook learned using images present in the list file
-'lfw-list-view1.txt'. See the file computeFeatures.sh for further help.
+'lfw-list-view1.txt'; the computed features will be stored in output directory
+'~/experiments/data/'. See the file computeFeatures.sh for further help.
 
 Please note that computed features for each input image are stored linearly in a
 separate binary file. You can read this binary file using the provided Matlab
@@ -147,10 +148,11 @@ available command line options.
 
 **2.3. Demo:** 
 However before running a thorough set of experiments we recommend you to run the
-demo script providing paths to output directory and input directory (LFWa folder)
-and number of experiments --- this argument for number of experiments is
-optional, by default demo script runs three experiments using LTP features. 
-E.g. to run demo.py with a set of 2  experiments we call it as follows:
+demo script (face-rec/code/demo.py) providing paths to output directory and
+input directory (LFWa folder) and number of experiments --- this argument for
+number of experiments is optional, by default demo script runs three experiments
+using LTP features. E.g. to run demo.py with a set of 2 experiments we call it
+as follows: 
 
 python demo.py /tmp/experiments /data/lfwa 2
 
@@ -175,5 +177,5 @@ public release of Felzenszwalb et.al "Discriminatively Trained Deformable Part
 Models" and MVG Osolo "LBP" code. We also acknowledge the public release of
 Eigen and MPI_KMEANS packages.
 
-Thanks to Alexis Mignon for providing his python code for computing PCA and
+We are athankful to Alexis Mignon for releasing his python code for computing PCA and
 Thibault Napoleon for his valuable feedback.
