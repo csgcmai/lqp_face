@@ -48,7 +48,7 @@ References:
      Patterns", In 12th European Conference on Computer Vision (ECCV), 2012.  
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local
      Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.  
-[3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis
+[3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis,
      University of Grenoble, 2011.
     
 Software Requirements:
