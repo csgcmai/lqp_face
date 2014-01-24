@@ -21,9 +21,9 @@ from scipy.misc import imsave
 class CommentlessFile(file):
     ''' A class for removing comments from the config file '''
     def readline(self):
-        line = super(CommentlessFile, self).readline() # call superclass readline method
+        line = super(CommentlessFile, self).readline()  # call superclass readline method
         if line:
-            line = line.split(';', 1)[0].strip() # for inline comments 
+            line = line.split(';', 1)[0].strip()  # for inline comments 
             line = line.split('#', 1)[0].strip()
             return line + '\n'
         else:
@@ -49,7 +49,7 @@ def prepare_list(idir, odir, dataset='train-val'):
 #     print len(imglist)
 #    imglist=[i[0] for i in imglist.flatten()]
     imglist = list(set([i[0] for i in imglist.flatten()]))
-    imglist = [i + ".jpg" for i in imglist]
+    imglist = [i + ".png" for i in imglist]
     u.write_list(cblistfile, imglist, idir)
     
     return imglistfile, cblistfile
@@ -58,7 +58,7 @@ class ArgumentParser:
     def __init__(self, v=1.0):
         ''' Initializes Argument Parser class to 
         parse a particular class type arguments, options can be: [features,learning,complete] '''
-        #print sys.argv[1:]
+        # print sys.argv[1:]
         self.args = sys.argv[1:]
         
         config_parser = argparse.ArgumentParser(
@@ -172,7 +172,7 @@ class ArgumentParser:
                    "yoffset":-4,
                    "cbdataset":"train-val",
                    "ftype":"LQP",
-                   "usergb":True
+                   "usergb":"false"
                   }
         if not self.config is None:
             defaults = dict(self.config.items("General"))
@@ -211,11 +211,12 @@ class ArgumentParser:
                         dest='cbdataset',
                         help="(For LQP) Which portion of view1 to use for codebook learning, option can be either train-val or compelete")
         ggroup.add_argument('--usergb', dest="usergb",
-                            help="Use color information during feature computations (by default = True) ")
-       
+                             help="Use color information during feature computations ")
         try:
             options, self.args = self.gparser.parse_known_args(self.args)
             u.check_values(options.dataset, ["FERET", "LFW"])
+#             print "Use Rgb = ", options.usergb, u.str2bool(options.usergb)
+            options.usergb = u.str2bool(options.usergb)
             options.idir, options.rgbsuffix = u.flattened_images_subdir(options.idir, options.odir, options.usergb)
 #             print options
             return options

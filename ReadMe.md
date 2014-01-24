@@ -1,181 +1,220 @@
 Face Recognition Using Local Quantized Patterns
 =================================================
 
-Information
-===========
+Background
+==========
 
-Project webpage: http://sites.google.com/site/sibtulhussain/research/.
+Project webpage: http://sites.google.com/site/sibtulhussain/research
 
-This is an implementation of our face verification system [2] based on Local
-Quantized Pattern features [1, 3]. The current implementation is the replica of
-MATLAB learning code used in [2], however the feature computation code is the original
-one [1].
+This is an implementation of our face verification system [2] based on
+Local Quantized Pattern features [1, 3]. The implementation is a
+replica of the MATLAB learning code used in [2], with feature
+computation code from [1].
 
-The current distribution contains code for computing local pattern features
-(LBP, LTP, LQP, etc.) and unsupervised learning, as well as models trained on
-Labelled Faces in Wild datasets. Feature computation code is implemented in C++,
-while the learning code is written in python. We also provide scripts (both in
-python and bash) for computing features only. The software was tested on
-Ubuntu 12.04.03 with the libraries mentioned as follows. 
+The distribution contains routines for computing local pattern
+features (LBP, LTP, LQP, etc.) for unsupervised learning, and also
+code for face verification model training on the "Labelled Faces in
+the Wild" aligned datasets [4, 5]. The feature computation is written in C++
+while the learning code is written in python. We also provide examples
+of high-level bash and python scripts for running the feature
+computation.
 
-[ImageMagick](http://www.imagemagick.org/script/install-source.php) version 6.8.1,
-g++ version 4.6.3,
-[Boost](http://www.boost.org/) version 1.46,
-[Eigen](http://eigen.tuxfamily.org) version 2.0 (included in this distribution),
-[MPI_KMEANS](http://mloss.org/software/view/48/) version 1.5 (included in this distribution),
-[IPython](http://ipython.org) version 0.12.1 (optional for notebooks)
+The research was supported by the Higher Education Commission (HEC) of
+Pakistan, the European Commission research project CLASS, and the
+French ANR project ANR-08-SECU-008-01/SCARFACE.
 
-There may be compatibility issues with other versions of libraries.
+For questions concerning the distribution, please contact Sibt ul
+Hussain at sibt.ul.hussain@gmail.com.
 
-For questions concerning the code please contact Sibt ul Hussain at
-*sibt dot ul dot Hussain at gmail dot com*.
+References
+==========
 
-This project has been supported by grants from Higher Education Commission (HEC)
-of Pakistan, European Union Project CLASS, and French ANR i.e.
-ANR-08-SECU-008-01/SCARFACE.
-
-License
-=========
-For license terms please see license.lic. 
-
-How to Cite
-===========
-When citing our system, please cite references [1] and [2].
-
-References:
-===========
 [1]. S. Hussain and B. Triggs, "Visual Recognition using Local Quantized
      Patterns", In 12th European Conference on Computer Vision (ECCV), 2012.  
 [2]. S. Hussain, T. Napoleon and F. Jurie, "Face Recognition using Local
      Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.  
 [3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis,
-     University of Grenoble, 2011.
+     University of Grenoble, 2011. Available as ISBN 978-3841790682 from Editions 
+     Universitaires Europeennes, 2012.
+[4]. Gary B. Huang and Manu Ramesh and Tamara Berg and Erik Learned-Miller,
+     "Labeled Faces in the Wild: A Database for Studying Face Recognition
+     in Unconstrained Environments", Technical report, University of
+     Massachusetts, 2007. [Available here](http://vis-www.cs.umass.edu/lfw/)
+[5]. Lior Wolf, Tal Hassner, and Yaniv Taigman, "Effective Face Recognition by
+     Combining Multiple Descriptors and Learned Background Statistics", IEEE
+     Trans. on Pattern Analysis and Machine Intelligence (TPAMI), 33(10), Oct. 2011    
+
+License
+=======
+
+This is unsupported software released "as is" under the BSD
+license.  For details see license.lic.  If you use this software for a
+publication, please cite references [1] and [2] above.
     
-Software Requirements:
-======================
-Although we have successfully tested this system on Ubuntu 12.04 however it
-should compile and run on most of the recent Linux distributions. To compile the
-code successfully you will need to install ImageMagick development files and C++
-boost libraries. Details of the libraries installation process are given below.
+Environment
+===========
 
-1. Install the ImageMagick development libraries. Easiest but not recommended
-method is to download the already available compiled sources for your os (e.g.
-on ubuntu : sudo apt-get install libmagick++-dev). However, it is not
-recommended because by default, these libraries are compiled with openmp flag
-and lead to too much threshing in multi-processor setup and make the overall
-computation slow. The recommended method is to download the source code
-(http://www.imagemagick.org/script/download.php) and compile it locally without
-openmp support i.e. ./configure --disable-openmp
+The software was tested mainly on 64 bit Ubuntu 12.04.03 but it should
+compile and run on other recent Linux workstation distributions
+provided that the listed dependencies are installed. For example
+Fedora 19 x86_64 also works. MS Windows and Macintosh are not
+currently supported.
 
+Running the complete LFW example requires a workstation with 8Gb of
+memory. 4Gb suffices if only the features are computed.
 
-2. Install the C++ boost libraries for your OS. e.g. on Ubuntu boost libraries
-   can be installed as follows: sudo apt-get install libboost-all-dev
+The code was tested with the following libraries on Ubuntu 12.04.03:
 
+g++ version 4.6.3,
+[ImageMagick](http://www.imagemagick.org/script/install-source.php) version 6.8.1,
+[Boost](http://www.boost.org/) version 1.46,
+[Eigen](http://eigen.tuxfamily.org) version 2.0 (included in this distribution),
+[MPI_KMEANS](http://mloss.org/software/view/48/) version 1.5 (included in this distribution),
+[IPython](http://ipython.org) version 0.12.1 (optional, for running ipynb notebooks)
 
-Hardware Requirements:
-======================
-Running the complete system requires a machine with 8Gb memory (4Gb, if only
-features are computed). 
+There may be compatibility issues for other versions of these libraries.
 
+Compiling the Basic Feature Code
+================================
 
-Compiling
-============
-1. To compile, call the make in features directory, i.e.
+1. To compile the basic feature computation binary you will need to
+install ImageMagick and C++ boost:
+
+- Install the ImageMagick development libraries. The easiest approach
+is to install the standard binary packages for your distribution (e.g.
+on ubuntu : sudo apt-get install libmagick++-dev). However note that
+by default these libraries are compiled with OpenMP enabled which can
+cause multi-processor machines to thrash making the overall feature
+computation slow. If this causes problems, the recommended fix is to
+download the source code
+(http://www.imagemagick.org/script/download.php) and compile it
+locally without openmp support i.e. ./configure --disable-openmp
+
+- Install the C++ boost libraries, e.g. on ubuntu: sudo apt-get
+install libboost-all-dev
+
+2. Run make in the features directory:
  cd features
  make all 
-  or
- make -j all (to compile the files in parallel in a multi-processor setup)
- Please see Makefile for other compilation options. 
+ (or "make -j all" to compile the files in parallel in a
+ multi-processor setup). See the Makefile for other compilation
+ options.
 
-2. On successful completion executable file named mainFeatures will be generated
-and can be located in the build directory. Help on all the available options can
-be obtained by calling mainFeatures with help flag i.e. mainFeatures --help
+3. A successful compilation generates a single executable mainFeatures
+in the build directory. "mainFeatures --help" lists all of its
+available options.
 
-Basic Usage
-=============
-1. Bash (For computing features only):
---------------------------------------
+Running the Basic Feature Code
+==============================
 
-To compute the features (with default parameters) simply call computeFeatures.sh
-providing features type (LQP, LBP or LTP) and files containing list of images
-for training and codebook learning (for LQP only) as arguments e.g.
+To compute features with the default parameter settings, run
+computeFeatures.sh with the desired feature type (LQP, LBP or LTP) and
+image lists:
 
-bash computeFeatures.sh lqp ~/dataset/lfw-list.txt ~/experiments/data/
-~/dataset/lfw-list-view1.txt
+bash computeFeatures.sh lqp target-images.txt output-dir codebook-images.txt
 	
-Here LQP features will be computed from all the images present in the list file
-'lfw-list.txt' using the codebook learned using images present in the list file
-'lfw-list-view1.txt'; the computed features will be stored in output directory
-'~/experiments/data/'. See the file computeFeatures.sh for further help.
+Here, LQP features will be computed for all of the images listed in
+'target-images.txt' and stored under directory 'output-dir', using a
+codebook learned from the images listed in 'codebook-images.txt'
+(optional - needed only for LQP). See computeFeatures.sh for further
+help.
 
-Please note that computed features for each input image are stored linearly in a
-separate binary file. You can read this binary file using the provided Matlab
-(readFeatureFile in matlab directory) or python code (function read_feature_file
-in face-rec/code/trainAndEvaluateLFW.py).
+Note that the features of each input image are stored in a separate
+binary file as a linear array. You can read these files from Matlab
+(readFeatureFile in the matlab directory) or python code (function
+read_feature_file in face-rec/code/trainAndEvaluateLFW.py).
 
-2. Python (Both for features computation and face-verification)
----------------------------------------------------------------
-**2.1. Requirements:**
-For Python code to work, you will need to install following scientific packages:
-numpy, scipy and matplotlib (On Ubuntu: sudo apt-get install python-scipy
-python-numpy python-matplotlib; note that Fedora needs both python-matplotlib
-and python-matplotlib-tk RPM's).
 
-**2.2. Usage:**
-We provide the complete python code for our face-verification algorithm [2], the
-code can be found in face-rec directory. Further information can be obtained by
-reading the configuration file ('config.py') in the face-rec directory. To use
-the code you will need to download any of the LFW aligned version --- although
-our code have been extensively tested with following version
-(http://www.openu.ac.il/home/hassner/data/lfwa/), however it also works out of
-box for the recently released deeply-funnelled version --- and extract it
-somewhere on your hard disk. Next, you will need to update the first two
-variables (idir and odir) in 'config.py' by pointing them to the respective
-path. Once done simply 'cd' to code directory and execute the 'run.py' script by
-giving it path of configuration file. i.e.
+Installing the Python Code
+==========================
+
+This is needed for the demo and face verification experiments and also
+for running feature computation under Python.
+
+Besides Python itself, you will need to install the following
+scientific packages: numpy, scipy and matplotlib. (On Ubuntu: sudo
+apt-get install python-scipy python-numpy python-matplotlib; note that
+Fedora needs both python-matplotlib and python-matplotlib-tk
+RPM's). To use the optional ipython (*.ipynb) notebooks you will also
+need to install ipython.
+
+Using the Python LFW Code
+=========================
+
+The complete python code for our face-verification algorithm [2] can
+be found in the face-rec directory. For further information and
+parameter settings, see 'face-rec/config.py'. 
+
+To run this you will need to download an aligned version of the
+"Labeled Faces in the Wild" face dataset. The current parameter
+settings were optimized for the old LFWA alignment
+(http://www.openu.ac.il/home/hassner/data/lfwa/). The code also runs
+well with more recent alignments such as the deep-funnelled one,
+however the parameter settings would need to be tweaked to get the
+optimal results on these.  
+
+Extract the aligned LFW dataset somewhere on your hard disk, and also
+make an empty directory for feature and model output.
+
+1. Demo Run
+-----------
+
+A complete run on LFW takes several hours. First we suggest that you
+test your installation with a short demo.  'cd' to face-rec/code and
+call:
+
+python demo.py output-dir lfwa-path 2
+
+where 'output-dir' is the desired output directory, 'lfwa-path' is the
+path to the LFWA input and N is the number of tests to run (default
+3, using LTP features).
+
+Running the complete demo program requires 3Gb of memory and takes
+around 1.5 hours on an i7 machine. Running only two experiments takes
+around 8 minutes. See 'demo.py' for further details, options and
+possible configurations for other feature types.
+
+2. Full LFW Run
+----------------
+
+Update the variables 'idir' and 'odir' in 'face-rec/config.py' to
+point to the desired LFWA input and output directories. Then 'cd' to
+the face-rec/code directory and call:
 
 python run.py --configfile=../config.py
 
-On successful completion computed features can be located in directory
-'odir/features/feature-type', whereas learned models on different feature types
-with different parameters can be located in 'odir/features/feature-type/data'.
-Learned models are numpy binary files and can be loaded into python by calling
-load function of numpy. 
+On successful completion the computed features for each specified
+feature-type will be in a directory 'odir/features/feature-type', with
+the learned models and parameter settings in
+'odir/features/feature-type/data'.  Learned models are numpy binary
+files that can be loaded into python using the numpy load function.
 
-For computing features only, you can either configure config.py or call run.py
-with command line arguments. Call run.py with '--help' flag to see all the
-available command line options.
+To compute only the features, either update config.py or call run.py
+with the desired command line arguments -- call 'run.py --help' to
+list the available options.
 
-**2.3. Demo:** 
-However before running a thorough set of experiments we recommend you to run the
-demo script (face-rec/code/demo.py) providing paths to output directory and
-input directory (LFWa folder) and number of experiments --- this argument for
-number of experiments is optional, by default demo script runs three experiments
-using LTP features. E.g. to run demo.py with a set of 2 experiments we call it
-as follows: 
+3. Visualizing the Results
+--------------------------
 
-python demo.py /tmp/experiments /data/lfwa 2
+When the experiments finish you can visualize some of the results by
+running the demo notebook:
 
-This script will hopefully enable you to find out potential problems (if any)
-with your installation. Note that running the complete demo program requires a
-system with 3Gb memory and takes around 1.5 hours on an i7 machine. Running only
-two experiments takes around 8 minutes. See 'demo.py' for further details,
-options and possible configurations for other feature types. 
+ipython notebook demo.ipynb
 
-Once done with the experiments, you can run the demo notebook (demo.ipynb) to
-visualize the results.  
+You can examine some cached results without running the experiments by
+either opening 'demo-nb.pdf' or running the corresponding demo
+notebook. We also provide excerpts from our original experimental
+notebook in 'lqp-face-recog-release-nb.pdf' and
+'lqp-face-recog-release.ipynb'.
 
-You can visualize the demo results directly without running the experiments by
-either opening the demo-nb.pdf or running the provided demo notebook. We also
-provide some excerpts from our experiments notebook (see lqp-face-recog-release-nb.pdf
-or lqp-face-recog-release.ipynb). 
+Acknowledgements
+================
 
-Acknowledgements:
-=================
-Our features computation code draws heavy influences (among others) from the
-public release of Felzenszwalb et.al "Discriminatively Trained Deformable Part
-Models" and MVG Osolo "LBP" code. We also acknowledge the public release of
-Eigen and MPI_KMEANS packages.
+The feature computation code was heavily influenced (among others) by
+the public releases of the Felzenszwalb et.al. "Discriminatively
+Trained Deformable Part Models" code and the MVG Osolo "LBP" code. We
+also acknowledge the public release of Eigen and MPI_KMEANS packages.
 
-We are athankful to Alexis Mignon for releasing his python code for computing PCA and
-Thibault Napoleon for his valuable feedback.
+We would also like to thank to Alexis Mignon for releasing his python
+code for PCA computation and Thibault Napoleon for his valuable
+feedback.

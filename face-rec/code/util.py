@@ -18,8 +18,14 @@ import sys
 import PCA as PCAAlgo
 from PIL import Image 
 from shutil import *
-from ImageOps import crop
+# from ImageOps import crop
 # from numpy.f2py.auxfuncs import isarray
+  
+
+
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
+
 def rgb2gray(rgb):
     '''converts an rgb image to a grayscale one'''
     return np.dot(rgb[..., :3], [0.299, 0.587, 0.144])
@@ -28,7 +34,7 @@ def flattened_images_subdir(idir, odir, usergb):
     ''' copy the images from all the subdirectories into a single flattened directory in odir '''
     sdirs = get_dirs_withpath(idir)
     limages = get_imlist(idir)
-    if (type(usergb) == bool and usergb == True) or (type(usergb) == str and usergb.lower() == 'true'):
+    if usergb:
         rgbsuffix = '-rgb'
     else:
         rgbsuffix = ''
@@ -45,7 +51,8 @@ def flattened_images_subdir(idir, odir, usergb):
                     simg = os.path.join(d, i)
                     dimg = os.path.join(odir, i)
                     im = Image.open(simg)
-                    if im.mode == "RGB" and usergb.lower() != "true":
+                    #TODO: Replace this portion with png.py module...
+                    if im.mode == "RGB" and not usergb:
                         im.convert('L').save(dimg);
                     else:
                         im.save(dimg);
@@ -256,8 +263,8 @@ def crop_images_with_offsets(options):
 #    return 
     for count, image in enumerate(imlist):
         im = Image.open(image)        
-        if im.mode == 'RGB':
-            im.convert('L');  # convert to grayscale
+        if im.mode == 'RGB' and not options.usergb:
+            im = im.convert('L');  # convert to grayscale
         if options.dataset == 'FERET':
             # Rescale the image... 
             print ' Rescaling the images for FERET Dataset'
@@ -269,9 +276,29 @@ def crop_images_with_offsets(options):
         x = x + options.xoffset
         y = y + options.yoffset;
         print 'Processing Image Number %d/%d, Cropping rectangle location x = %d, y=%d' % (count + 1, len(imlist), x, y)
-        cr_image = Image.fromarray(im [y:y + options.height + 2 * options.padding, x:x + options.width + 2 * options.padding ]);
-        imname = os.path.join(cidir, os.path.basename(image).rsplit('.')[0] + '.jpg')        
+        
+        
+        if not options.usergb:
+            cim = (im [y:y + options.height + 2 * options.padding, x:x + options.width + 2 * options.padding ]);
+        else:
+            cim = (im [y:y + options.height + 2 * options.padding, x:x + options.width + 2 * options.padding, :]);
+        
+        
+        cr_image = Image.fromarray(cim)
+        
+        # In case you encounter errors fromarray function please uncomment
+        # following two lines of code for saving 
+        # np array in .png format using png package (included)
+        # and comment out the above line "cr_image=Image.fromarray(cim)"
+        
+        # Note: This only works for gray-scale images... 
+        
+#         import png
+#         cr_image = png.fromarray(cim, 'L') 
+        
+        imname = os.path.join(cidir, os.path.basename(image).rsplit('.')[0] + '.png')        
         cr_image.save(imname)
+        
         ofile.write(imname + "\n")
     ofile.close()
 
@@ -317,6 +344,7 @@ def crop_images(options):
     print 'Cropped Image Width(+2*padding) =  %d' % (options.width + 2 * options.padding)
     print 'Cropped Image Height(+2*padding) =  %d' % (options.height + 2 * options.padding)
     print 'Xoffset = %r, Yoffset = %r' % (options.xoffset, options.yoffset)
+    print 'Working on ' + 'Gray-Scale Images' if not options.usergb else "RGB Images" 
     print '''#############################################################'''
 
     check_values(options.dataset, ["FERET", "LFW"])
@@ -360,11 +388,14 @@ def crop_images_args(argv=None):
                         dest='dataset',
                         help=('''Images belong to which dataset, LFW or FERET'''),
                         default="LFW")
+    ggroup.add_argument('--usergb', dest="usergb",
+                            help="Use color information during feature computations ",default="False")
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)         
     options = parser.parse_args()
     # ftype, featdir, listfile
+    options.usergb = str2bool(options.usergb)
     crop_images(options)
 if __name__ == "__main__":
     sys.exit(crop_images_args())

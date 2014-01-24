@@ -118,7 +118,7 @@ def read_descriptors(inames, featdir, ftype, dstr=""):
 #    cbsize = 300;  # 2 x 150    
     ftype = ftype.upper();
     nimages = len(inames);
-    feat, m, n = read_feature_file(os.path.join(featdir, inames[0][0][0] + '.jpg-' + ftype));
+    feat, m, n = read_feature_file(os.path.join(featdir, inames[0][0][0] + '.png-' + ftype));
 #    n = n / cbsize; ncells = m * n;
         
     litem = np.zeros((nimages, feat.size), np.float32);
@@ -130,8 +130,8 @@ def read_descriptors(inames, featdir, ftype, dstr=""):
     print 'Starting Reading Descriptors %s' % dstr;
 
     for k, images in enumerate(inames):
-        lename = os.path.join(featdir, inames[k][0][0] + '.jpg-' + ftype);
-        rename = os.path.join(featdir, inames[k][1][0] + '.jpg-' + ftype);
+        lename = os.path.join(featdir, inames[k][0][0] + '.png-' + ftype);
+        rename = os.path.join(featdir, inames[k][1][0] + '.png-' + ftype);
         
         litem[k, :] = read_feature_file(lename)[0];
         ritem[k, :] = read_feature_file(rename)[0];
