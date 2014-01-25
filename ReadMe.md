@@ -213,8 +213,8 @@ Acknowledgements
 The feature computation code was heavily influenced (among others) by
 the public releases of the Felzenszwalb et.al. "Discriminatively
 Trained Deformable Part Models" code and the MVG Osolo "LBP" code. We
-also acknowledge the public release of Eigen, MPI_KMEANS and png.py packages.
+also acknowledge the public release of Eigen, MPI_KMEANS and pypng packages.
 
-We would also like to thank to Alexis Mignon for releasing his python
+We would also like to say thanks to Alexis Mignon for releasing his python
 code for PCA computation and Thibault Napoleon for his valuable
 feedback.

@@ -284,21 +284,17 @@ def crop_images_with_offsets(options):
             cim = (im [y:y + options.height + 2 * options.padding, x:x + options.width + 2 * options.padding, :]);
         
         
-        cr_image = Image.fromarray(cim)
-        
+        imname = os.path.join(cidir, os.path.basename(image).rsplit('.')[0] + '.png')
+        Image.fromarray(cim).save(imname)
+
         # In case you encounter errors fromarray function please uncomment
         # following two lines of code for saving 
-        # np array in .png format using png package (included)
-        # and comment out the above line "cr_image=Image.fromarray(cim)"
-        
-        # Note: This only works for gray-scale images... 
-        
-#         import png
-#         cr_image = png.fromarray(cim, 'L') 
-        
-        imname = os.path.join(cidir, os.path.basename(image).rsplit('.')[0] + '.png')        
-        cr_image.save(imname)
-        
+        # np array in .png format using pypng package (included)
+        # and comment out the above line "Image.fromarray(cim).save(imname)"
+        # 
+#         import SavePNG as spng
+#         spng.savePNG(imname, cim)
+
         ofile.write(imname + "\n")
     ofile.close()
 
