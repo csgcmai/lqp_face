@@ -14,7 +14,7 @@ xoffset=1 # offsets to be added (from the center position) to the crop window pl
 yoffset=-4
 cbdataset=train-val # complete # This option is used only with LQP Features. It is used to choose subset of dataset for codebook learning e.g. in case of LFW it can be either view1 training validation ('train-val') subset or complete view1 set('complete') 
 ftype=LQP # Feature types. Choice can be LBP, LTP, LBP+LTP or LQP
-usergb=True # if color images, use  color information during feature computations.
+usergb=False # if color images, use  color information during feature computations.
 
 [Features]
 # options for feature computation

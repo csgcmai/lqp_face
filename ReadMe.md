@@ -14,7 +14,7 @@ computation code from [1].
 The distribution contains routines for computing local pattern
 features (LBP, LTP, LQP, etc.) for unsupervised learning, and also
 code for face verification model training on the "Labelled Faces in
-the Wild" aligned datasets [4, 5]. The feature computation is written in C++
+the Wild" [LFW] aligned datasets [4, 5]. The feature computation is written in C++
 while the learning code is written in python. We also provide examples
 of high-level bash and python scripts for running the feature
 computation.
@@ -35,11 +35,11 @@ References
      Quantized Patterns", In 23rd British Machine Vision Conference (BMVC), 2012.  
 [3]. S. Hussain, "Machine Learning Methods for Visual Object Detection", PhD Thesis,
      University of Grenoble, 2011. Available as ISBN 978-3841790682 from Editions 
-     Universitaires Europeennes, 2012.
+     Universitaires Europeennes, 2012.  
 [4]. Gary B. Huang and Manu Ramesh and Tamara Berg and Erik Learned-Miller,
      "Labeled Faces in the Wild: A Database for Studying Face Recognition
      in Unconstrained Environments", Technical report, University of
-     Massachusetts, 2007. [Available here](http://vis-www.cs.umass.edu/lfw/)
+     Massachusetts, 2007. [Available here](http://vis-www.cs.umass.edu/lfw/)  
 [5]. Lior Wolf, Tal Hassner, and Yaniv Taigman, "Effective Face Recognition by
      Combining Multiple Descriptors and Learned Background Statistics", IEEE
      Trans. on Pattern Analysis and Machine Intelligence (TPAMI), 33(10), Oct. 2011    
@@ -146,7 +146,7 @@ be found in the face-rec directory. For further information and
 parameter settings, see 'face-rec/config.py'. 
 
 To run this you will need to download an aligned version of the
-"Labeled Faces in the Wild" face dataset. The current parameter
+"Labeled Faces in the Wild" [5] face dataset. The current parameter
 settings were optimized for the old LFWA alignment
 (http://www.openu.ac.il/home/hassner/data/lfwa/). The code also runs
 well with more recent alignments such as the deep-funnelled one,
@@ -213,7 +213,7 @@ Acknowledgements
 The feature computation code was heavily influenced (among others) by
 the public releases of the Felzenszwalb et.al. "Discriminatively
 Trained Deformable Part Models" code and the MVG Osolo "LBP" code. We
-also acknowledge the public release of Eigen and MPI_KMEANS packages.
+also acknowledge the public release of Eigen, MPI_KMEANS and png.py packages.
 
 We would also like to thank to Alexis Mignon for releasing his python
 code for PCA computation and Thibault Napoleon for his valuable
