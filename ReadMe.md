@@ -4,7 +4,7 @@ Face Recognition Using Local Quantized Patterns
 Background
 ==========
 
-Project webpage: http://sites.google.com/site/sibtulhussain/research
+Project webpage: [http://sites.google.com/site/sibtulhussain/research](http://sites.google.com/site/sibtulhussain/research)
 
 This is an implementation of our face verification system [2] based on
 Local Quantized Pattern features [1, 3]. The implementation is a
