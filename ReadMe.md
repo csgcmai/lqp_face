@@ -80,18 +80,18 @@ Compiling the Basic Feature Code
 1. To compile the basic feature computation binary you will need to
 install ImageMagick and C++ boost:
 
-- Install the ImageMagick development libraries. The easiest approach
-is to install the standard binary packages for your distribution (e.g.
-on ubuntu : sudo apt-get install libmagick++-dev). However note that
-by default these libraries are compiled with OpenMP enabled which can
-cause multi-processor machines to thrash making the overall feature
-computation slow. If this causes problems, the recommended fix is to
-download the source code
-(http://www.imagemagick.org/script/download.php) and compile it
-locally without openmp support i.e. ./configure --disable-openmp
+	- Install the ImageMagick development libraries. The easiest approach
+	is to install the standard binary packages for your distribution (e.g.
+	on ubuntu : sudo apt-get install libmagick++-dev). However note that
+	by default these libraries are compiled with OpenMP enabled which can
+	cause multi-processor machines to thrash making the overall feature
+	computation slow. If this causes problems, the recommended fix is to
+	download the source code
+	(http://www.imagemagick.org/script/download.php) and compile it
+	locally without openmp support i.e. ./configure --disable-openmp
 
-- Install the C++ boost libraries, e.g. on ubuntu: sudo apt-get
-install libboost-all-dev
+	- Install the C++ boost libraries, e.g. on ubuntu: sudo apt-get
+	install libboost-all-dev
 
 2. Run make in the features directory:
  cd features
